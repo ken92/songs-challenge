@@ -8,9 +8,9 @@ export default {
 
       const query = search
         ? `SELECT * FROM songs
-      WHERE track_name LIKE '%${search}%'
-      OR track_artist LIKE '%${search}%'
-      OR track_album_name LIKE '%${search}%'
+      WHERE track_name LIKE "%${search}%"
+      OR track_artist LIKE "%${search}%"
+      OR track_album_name LIKE "%${search}%"
       ORDER BY track_name ASC
       LIMIT ${PER_PAGE} OFFSET ${offsetStart}`
         : `SELECT * FROM songs
@@ -28,9 +28,9 @@ export default {
       const totalResult = await db.exec(
         search
           ? `SELECT COUNT(*) FROM songs
-      WHERE track_name LIKE '%${search}%'
-      OR track_artist LIKE '%${search}%'
-      OR track_album_name LIKE '%${search}%'`
+      WHERE track_name LIKE "%${search}%"
+      OR track_artist LIKE "%${search}%"
+      OR track_album_name LIKE "%${search}%"`
           : 'SELECT COUNT(*) FROM songs'
       );
 

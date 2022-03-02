@@ -6,7 +6,7 @@ const GENRES = ['rap', 'pop', 'edm', 'r&b', 'rock', 'latin'];
 const GenreNavButton = ({ isSelected, genre, onClick }) => 
   <button
     type="button"
-    className={`text-capitalize btn btn-${isSelected ? 'primary' : 'light'} m-2`}
+    className={`text-capitalize m-2 btn btn-${isSelected ? 'primary' : 'light'}`}
     style={{ width: `${Math.floor(85 / GENRES.length)}%` }}
     onClick={onClick}
   >
@@ -25,7 +25,7 @@ export default function Genres() {
 
   return (
     <>
-      <div className="sticky-top p-2">
+      <div className="sticky-top p-2 bg-light">
         {GENRES.map(genre => (
           <GenreNavButton key={genre} genre={genre} isSelected={genre === selectedGenre} onClick={() => { scrollToGenre(genre); setSelectedGenre(genre); }} />
         ))}

@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import { request, gql } from 'graphql-request';
 import useSWR from 'swr';
 
@@ -39,7 +40,7 @@ const fetcher = genre =>
     genre
   });
 
-export default function Genre({ genre }) {
+const Genre = forwardRef(({ genre }, ref) => {
   const { data, error } = useSWR([genre], fetcher);
 
   if (!data && !error)
@@ -64,7 +65,7 @@ export default function Genre({ genre }) {
 
   return (
     <div className="container">
-      <h2 className="text-capitalize py-5">{genre}</h2>
+      <h2 className="text-capitalize py-5" ref={ref}>{genre}</h2>
       {data.SongsByGenre.length ? (
         <div className="row row-cols-1 row-cols-sm-3 row-cols-lg-5 g-3">
           {data.SongsByGenre.map(song => (
@@ -76,4 +77,6 @@ export default function Genre({ genre }) {
       )}
     </div>
   );
-}
+});
+
+export default Genre;

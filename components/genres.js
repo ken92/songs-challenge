@@ -1,4 +1,4 @@
-import { useState, createRef, forwardRef } from 'react';
+import { useState, createRef, useEffect } from 'react';
 import VisibilitySensor from 'react-visibility-sensor';
 import Genre from './genre';
 
@@ -16,7 +16,17 @@ const GenreNavButton = ({ isSelected, genre, onClick }) =>
 
 export default function Genres() {
   const [selectedGenre, setSelectedGenre] = useState(GENRES[0]);
+  const [useVisibilitySensor, setUseVisibilitySensor] = useState(false);
   const genreRefs = {};
+
+  const pauseVisibilitySensor = (timeout) => {
+    setUseVisibilitySensor(false);
+    setTimeout(() => setUseVisibilitySensor(true), timeout);
+  };
+
+  useEffect(() => {
+    pauseVisibilitySensor(20);
+  }, [])
 
   const createGenreSection = (genre) => {
     genreRefs[genre] = createRef();
@@ -24,7 +34,7 @@ export default function Genres() {
       <VisibilitySensor
         key={genre}
         onChange={(isVisible) => {
-          if (isVisible) setSelectedGenre(genre);
+          if (useVisibilitySensor && isVisible) setSelectedGenre(genre);
           console.log(`${genre} isVisible: ${isVisible}`);
         }}
       >
@@ -39,7 +49,7 @@ export default function Genres() {
     <>
       <div className="sticky-top pb-2 px-2 bg-light">
         {GENRES.map(genre => (
-          <GenreNavButton key={genre} genre={genre} isSelected={genre === selectedGenre} onClick={() => { scrollToGenre(genre); setSelectedGenre(genre); }} />
+          <GenreNavButton key={genre} genre={genre} isSelected={genre === selectedGenre} onClick={() => { pauseVisibilitySensor(600); scrollToGenre(genre); setSelectedGenre(genre); }} />
         ))}
       </div>
 
